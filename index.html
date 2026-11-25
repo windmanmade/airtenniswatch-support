@@ -39,16 +39,39 @@
     }
     .mark { display: flex; align-items: center; gap: 10px; font-weight: 700; }
     .mark img { width: 36px; height: 36px; border-radius: 10px; }
-    header a {
-      text-decoration: none;
+    .tools { display: flex; align-items: center; gap: 10px; }
+    header a, .lang {
       border: 2px solid var(--line);
       border-radius: 999px;
-      padding: 6px 14px;
-      font-size: 14px;
-      font-weight: 650;
       background: var(--card);
       box-shadow: 3px 3px 0 var(--line);
     }
+    header a {
+      text-decoration: none;
+      padding: 6px 14px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+    .lang { display: flex; overflow: hidden; }
+    .lang button {
+      border: 0;
+      background: transparent;
+      color: var(--ink);
+      font: inherit;
+      font-size: 14px;
+      font-weight: 700;
+      padding: 6px 12px;
+      cursor: pointer;
+    }
+    html:not([data-lang="en"]) .lang button[data-set="zh"],
+    html[data-lang="en"] .lang button[data-set="en"] {
+      background: var(--ink);
+      color: var(--yellow);
+    }
+    .only-en { display: none; }
+    html[data-lang="en"] .only-zh { display: none; }
+    html[data-lang="en"] .only-en { display: revert; }
+    html[data-lang="en"] h1 { font-size: clamp(46px, 7vw, 76px); letter-spacing: -0.035em; }
     .hero {
       display: grid;
       grid-template-columns: 168px 1fr;
@@ -90,7 +113,7 @@
       padding: 14px 0;
       border-top: 1.5px solid rgba(44, 44, 44, 0.16);
     }
-    .steps span { font-weight: 800; font-variant-numeric: tabular-nums; }
+    .steps li > span:first-child { font-weight: 800; font-variant-numeric: tabular-nums; }
     .notes { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
     .note { padding: 18px; box-shadow: 5px 5px 0 var(--line); }
     .note b { display: block; margin-bottom: 6px; }
@@ -122,8 +145,18 @@
       .support { align-items: start; }
       .hero img { width: 120px; height: 120px; border-radius: 30px; }
       h1 { font-size: 56px; }
+      html[data-lang="en"] h1 { font-size: 44px; }
     }
   </style>
+  <script>
+    (function () {
+      var lang = "zh";
+      try { if (localStorage.getItem("airtennis-lang") === "en") lang = "en"; } catch (e) {}
+      document.documentElement.dataset.lang = lang;
+      document.documentElement.lang = lang === "en" ? "en" : "zh-Hans";
+      if (lang === "en") document.title = "Air Tennis · Support";
+    })();
+  </script>
 </head>
 <body>
   <div class="poster">
@@ -131,79 +164,116 @@
       <header>
         <div class="mark">
           <img src="icon.png" alt="">
-          空气网球
+          <span class="only-zh">空气网球</span>
+          <span class="only-en">Air Tennis</span>
         </div>
-        <a href="#contact">联系开发者</a>
+        <div class="tools">
+          <a href="#contact"><span class="only-zh">联系开发者</span><span class="only-en">Contact</span></a>
+          <div class="lang" role="group" aria-label="Language">
+            <button type="button" data-set="zh">中文</button>
+            <button type="button" data-set="en">EN</button>
+          </div>
+        </div>
       </header>
       <section class="hero">
-        <img src="icon.png" alt="空气网球图标">
+        <img src="icon.png" alt="空气网球 Air Tennis">
         <div>
           <p class="eyebrow">APPLE WATCH</p>
-          <h1>空气网球</h1>
+          <h1><span class="only-zh">空气网球</span><span class="only-en">Air Tennis</span></h1>
           <p class="latin">AirTennisWatch</p>
-          <p class="lead">挥拍即响。手表识别你的网球动作，击球时播放声音，并记下这一拍的球速和力度。</p>
+          <p class="lead">
+            <span class="only-zh">挥拍即响。手表识别你的网球动作，击球时播放声音，并记下这一拍的球速和力度。</span>
+            <span class="only-en">Sound on contact. The watch recognizes your tennis swing, plays the hit, and records that shot’s speed and power.</span>
+          </p>
         </div>
       </section>
     </div>
   </div>
 
   <main class="wrap">
-    <h2>功能</h2>
+    <h2><span class="only-zh">功能</span><span class="only-en">FEATURES</span></h2>
     <div class="grid">
       <article class="card">
-        <b>五种动作</b>
-        <p>正手、反手、发球、正手削球、反手削球。</p>
+        <b><span class="only-zh">五种动作</span><span class="only-en">Five strokes</span></b>
+        <p><span class="only-zh">正手、反手、发球、正手削球、反手削球。</span><span class="only-en">Forehand, backhand, serve, forehand slice, and backhand slice.</span></p>
       </article>
       <article class="card">
-        <b>击球就有声音</b>
-        <p>屏幕同时给出动作名称、估算球速（km/h），以及轻挡、抽球或扣杀。</p>
+        <b><span class="only-zh">击球就有声音</span><span class="only-en">Sound on contact</span></b>
+        <p><span class="only-zh">屏幕同时给出动作名称、估算球速（km/h），以及轻挡、抽球或扣杀。</span><span class="only-en">The screen shows the stroke, an estimated ball speed in km/h, and the power: block, drive, or smash.</span></p>
       </article>
       <article class="card">
-        <b>训练留在腕上</b>
-        <p>今日挥拍、最高球速、每个动作的拍数和球速，还有近 7 天的挥拍量。</p>
+        <b><span class="only-zh">训练留在腕上</span><span class="only-en">Stats on the wrist</span></b>
+        <p><span class="only-zh">今日挥拍、最高球速、每个动作的拍数和球速，还有近 7 天的挥拍量。</span><span class="only-en">Today’s swings, top speed, the count and speed of each stroke, and the last 7 days.</span></p>
       </article>
       <article class="card">
-        <b>按你的动作校准</b>
-        <p>某一类经常认错时，只为这个动作录几拍，生成个人模型。也可以恢复默认。</p>
+        <b><span class="only-zh">按你的动作校准</span><span class="only-en">Calibrate your swing</span></b>
+        <p><span class="only-zh">某一类经常认错时，只为这个动作录几拍，生成个人模型。也可以恢复默认。</span><span class="only-en">When one stroke keeps getting misread, record a few reps of just that stroke and build a personal model. You can return to the default.</span></p>
       </article>
       <article class="card">
-        <b>健康可以以后再开</b>
-        <p>锻炼中显示心率和活动消耗，结束时写入「健康」。不授权也能挥拍和看统计。</p>
+        <b><span class="only-zh">健康可以以后再开</span><span class="only-en">Health can wait</span></b>
+        <p><span class="only-zh">锻炼中显示心率和活动消耗，结束时写入「健康」。不授权也能挥拍和看统计。</span><span class="only-en">Heart rate and active calories show during a workout and can be saved to Health. Swings and stats work without permission.</span></p>
       </article>
     </div>
 
-    <h2>用法</h2>
+    <h2><span class="only-zh">用法</span><span class="only-en">HOW TO USE</span></h2>
     <ol class="steps">
-      <li><span>01</span>在已配对的 iPhone 上安装，再到 Apple Watch 上打开空气网球。</li>
-      <li><span>02</span>按平时的方式握拍、挥拍。主页上写着「挥拍即响」。</li>
-      <li><span>03</span>看记录点「统计」。想让某一拍更准，点「校准」。</li>
-      <li><span>04</span>要测心率时，点「开始网球锻炼（测心率）」。打完点「结束并写入健康」。</li>
+      <li><span>01</span><span class="only-zh">在已配对的 iPhone 上安装，再到 Apple Watch 上打开空气网球。</span><span class="only-en">Install it on the paired iPhone, then open Air Tennis on Apple Watch.</span></li>
+      <li><span>02</span><span class="only-zh">按平时的方式握拍、挥拍。主页上写着「挥拍即响」。</span><span class="only-en">Swing the way you usually do. The home screen reads “挥拍即响”.</span></li>
+      <li><span>03</span><span class="only-zh">看记录点「统计」。想让某一拍更准，点「校准」。</span><span class="only-en">Tap 统计 (Stats) for your record. Tap 校准 (Calibrate) when a stroke should fit you better.</span></li>
+      <li><span>04</span><span class="only-zh">要测心率时，点「开始网球锻炼（测心率）」。打完点「结束并写入健康」。</span><span class="only-en">For heart rate, tap 开始网球锻炼（测心率）. When you finish, tap 结束并写入「健康」.</span></li>
     </ol>
 
-    <h2>权限</h2>
+    <h2><span class="only-zh">权限</span><span class="only-en">ACCESS</span></h2>
     <div class="notes">
       <article class="note">
-        <b>运动传感器</b>
-        <p>用来判断这次是不是挥拍，以及是哪一种动作。识别需要这项权限。</p>
+        <b><span class="only-zh">运动传感器</span><span class="only-en">Motion</span></b>
+        <p><span class="only-zh">用来判断这次是不是挥拍，以及是哪一种动作。识别需要这项权限。</span><span class="only-en">Used to tell a swing from other movement, and which stroke it is. Recognition needs this.</span></p>
       </article>
       <article class="note">
-        <b>健康，可选</b>
-        <p>你开始锻炼并同意之后，才读取心率、活动消耗，并把锻炼写入健身 App。之后也可以在 iPhone「健康 → 共享 → App」里打开。</p>
+        <b><span class="only-zh">健康，可选</span><span class="only-en">Health, optional</span></b>
+        <p><span class="only-zh">你开始锻炼并同意之后，才读取心率、活动消耗，并把锻炼写入健身 App。之后也可以在 iPhone「健康 → 共享 → App」里打开。</span><span class="only-en">Heart rate and active calories are read only after you start a workout and allow it. You can turn this on later in the iPhone Health app, under Sharing → Apps.</span></p>
       </article>
     </div>
 
     <section class="support" id="contact">
       <div>
-        <h2>技术支持</h2>
-        <p>识别不准、锻炼没有写入健康，或隐私相关的问题，发邮件即可。</p>
+        <h2><span class="only-zh">技术支持</span><span class="only-en">Support</span></h2>
+        <p><span class="only-zh">识别不准、锻炼没有写入健康，或隐私相关的问题，发邮件即可。</span><span class="only-en">If a stroke is misread, a workout didn’t save to Health, or you have a privacy question, send an email.</span></p>
       </div>
       <a class="mail" href="mailto:manmadewind@163.com">manmadewind@163.com</a>
     </section>
 
     <footer>
-      <p>隐私政策：<a href="https://www.privacypolicies.com/live/6a66cf12-5c21-4d1c-a93e-c8d62bccc374">Privacy Policy for AirTennisWatch</a></p>
-      <p>空气网球由个人开发者提供。Apple Watch、健康和健身是 Apple 的产品名称，本应用与 Apple 没有隶属关系。</p>
+      <p><span class="only-zh">隐私政策：</span><span class="only-en">Privacy policy: </span><a href="https://www.privacypolicies.com/live/6a66cf12-5c21-4d1c-a93e-c8d62bccc374">Privacy Policy for AirTennisWatch</a></p>
+      <p class="only-zh">空气网球由个人开发者提供。Apple Watch、健康和健身是 Apple 的产品名称，本应用与 Apple 没有隶属关系。</p>
+      <p class="only-en">Air Tennis is made by an independent developer. Apple Watch, Health, and Fitness are Apple product names. This app is not affiliated with Apple.</p>
     </footer>
   </main>
+  <script>
+    var copy = {
+      zh: {
+        title: "空气网球 · 技术支持",
+        description: "空气网球（AirTennisWatch）是一款 Apple Watch 网球挥拍应用。这里说明功能、用法，以及如何联系开发者。"
+      },
+      en: {
+        title: "Air Tennis · Support",
+        description: "Air Tennis (AirTennisWatch) is an Apple Watch app for tennis swings. Features, how to use it, and how to reach the developer."
+      }
+    };
+
+    function setLang(lang) {
+      lang = lang === "en" ? "en" : "zh";
+      document.documentElement.dataset.lang = lang;
+      document.documentElement.lang = lang === "en" ? "en" : "zh-Hans";
+      document.title = copy[lang].title;
+      var desc = document.querySelector('meta[name="description"]');
+      if (desc) desc.setAttribute("content", copy[lang].description);
+      try { localStorage.setItem("airtennis-lang", lang); } catch (e) {}
+    }
+
+    document.querySelectorAll(".lang button").forEach(function (btn) {
+      btn.addEventListener("click", function () { setLang(btn.dataset.set); });
+    });
+  </script>
 </body>
 </html>
